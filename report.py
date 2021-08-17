@@ -1,6 +1,4 @@
 # encoding=utf8
-import requests
-import json
 import time
 import datetime
 import pytz
@@ -8,7 +6,8 @@ import re
 import sys
 import argparse
 from bs4 import BeautifulSoup
-
+import requests
+import json
 class Report(object):
     def __init__(self, stuid, password, data_path):
         self.stuid = stuid
@@ -21,7 +20,7 @@ class Report(object):
         while (not loginsuccess) and retrycount:
             session = self.login()
             cookies = session.cookies
-            getform = session.get("http://weixine.ustc.edu.cn/2020")
+            getform = session.get("https://weixine.ustc.edu.cn/2020")
             retrycount = retrycount - 1
             if getform.url != "https://weixine.ustc.edu.cn/2020/home":
                 print("Login Failed! Retry...")
@@ -39,25 +38,24 @@ class Report(object):
             data = f.read()
             data = json.loads(data)
             data["_token"]=token
-
         headers = {
             'authority': 'weixine.ustc.edu.cn',
-            'origin': 'http://weixine.ustc.edu.cn',
+            'origin': 'https://weixine.ustc.edu.cn',
             'upgrade-insecure-requests': '1',
             'content-type': 'application/x-www-form-urlencoded',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.100 Safari/537.36',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36',
             'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-            'referer': 'http://weixine.ustc.edu.cn/2020/',
+            'referer': 'https://weixine.ustc.edu.cn/2020/',
             'accept-language': 'zh-CN,zh;q=0.9',
             'Connection': 'close',
-            'cookie': 'PHPSESSID=' + cookies.get("PHPSESSID") + ";XSRF-TOKEN=" + cookies.get("XSRF-TOKEN") + ";laravel_session="+cookies.get("laravel_session"),
+            'cookie': "PHPSESSID=" + cookies.get("PHPSESSID") + ";XSRF-TOKEN=" + cookies.get("XSRF-TOKEN") + ";laravel_session="+cookies.get("laravel_session"),
         }
 
-        url = "http://weixine.ustc.edu.cn/2020/daliy_report"
-        session.post(url, data=data, headers=headers)
-        data = session.get("http://weixine.ustc.edu.cn/2020").text
+        url = "https://weixine.ustc.edu.cn/2020/daliy_report"
+        resp=session.post(url, data=data, headers=headers)
+        data = session.get("https://weixine.ustc.edu.cn/2020").text
         soup = BeautifulSoup(data, 'html.parser')
-        pattern = re.compile("2020-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}")
+        pattern = re.compile("202[0-9]-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}")
         token = soup.find(
             "span", {"style": "position: relative; top: 5px; color: #666;"})
         flag = False
@@ -81,9 +79,12 @@ class Report(object):
         url = "https://passport.ustc.edu.cn/login?service=http%3A%2F%2Fweixine.ustc.edu.cn%2F2020%2Fcaslogin"
         data = {
             'model': 'uplogin.jsp',
-            'service': 'http://weixine.ustc.edu.cn/2020/caslogin',
+            'service': 'https://weixine.ustc.edu.cn/2020/caslogin',
+            'warn': '',
+            'showCode': '',
             'username': self.stuid,
             'password': str(self.password),
+            'button': ''
         }
         session = requests.Session()
         session.post(url, data=data)
