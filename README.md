@@ -14,7 +14,7 @@
 
 - 20200831：增强稳定性
 - 20200827：增加打卡失败重试功能，增加License
-- 20200826：为配合学校最新规定，切换至Github Actions实现一天三次打卡
+- 20200826：为配合学校最新规定，切换至Github Actions实现一天三次打卡（在这个fork版本中改回了一次）
 
 ## 使用方法
 
@@ -32,7 +32,7 @@
 
    ![secrets](imgs/image-20200826215037042.png)
 
-6. 默认的打卡时间是每天的中午11:30和晚上16:30，可能会有数分钟的浮动。如需选择其它时间，可以修改`.github/workflows/report.yml`中的`cron`，详细说明参见[安排的事件](https://docs.github.com/cn/actions/reference/events-that-trigger-workflows#scheduled-events)，请注意这里使用的是**国际标准时间UTC**，北京时间的数值比它大8个小时。建议修改默认时间，避开打卡高峰期以提高成功率。
+6. 默认的打卡时间是每天的上午9:30，可能会有数分钟的浮动。如需选择其它时间，可以修改`.github/workflows/report.yml`中的`cron`，详细说明参见[安排的事件](https://docs.github.com/cn/actions/reference/events-that-trigger-workflows#scheduled-events)，请注意这里使用的是**国际标准时间UTC**，北京时间的数值比它大8个小时。建议修改默认时间，避开打卡高峰期以提高成功率。
 
 7. 在Actions选项卡可以确认打卡情况。如果打卡失败（可能是临时网络问题等原因），脚本会自动重试，五次尝试后如果依然失败，将返回非零值提示构建失败。
 
