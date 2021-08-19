@@ -3,9 +3,9 @@
 name: Auto-report action
 
 on: 
-  push:
-    branches:
-      - master
+  #push:   because of the change of the system, workflow no longer use
+    #branches:
+      #- master
   schedule:
     - cron: '15 0 * * *'
 
