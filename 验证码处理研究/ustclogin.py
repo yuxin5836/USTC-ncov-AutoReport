@@ -70,5 +70,5 @@ class Login:
         if not loginsuccess:
             return False
         
-rpt=Login('PB20000156','xyl333','https://weixine.ustc.edu.cn/2020','https://weixine.ustc.edu.cn/2020/caslogin','https://weixine.ustc.edu.cn/2020/home')
+rpt=Login('PB20000000','******','https://weixine.ustc.edu.cn/2020','https://weixine.ustc.edu.cn/2020/caslogin','https://weixine.ustc.edu.cn/2020/home')
 rpt.login()
