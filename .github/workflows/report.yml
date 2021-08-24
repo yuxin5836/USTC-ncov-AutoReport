@@ -3,9 +3,9 @@
 name: Auto-report action
 
 on: 
-  #push:   because of the change of the system, workflow no longer use
-    #branches:
-      #- master
+  push:   because of the change of the system, workflow no longer use
+    branches:
+      - master
   schedule:
     - cron: '15 0 * * *'
 
@@ -24,6 +24,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        sudo apt-get install tesseract-ocr 
     - name: Run report script
       env:
         STUID: ${{ secrets.Stuid }}
