@@ -3,7 +3,7 @@
 name: Auto-report action
 
 on: 
-  push:   because of the change of the system, workflow no longer use
+  push:
     branches:
       - master
   schedule:
