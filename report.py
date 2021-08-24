@@ -1,4 +1,3 @@
-# encoding=utf8
 import time
 import datetime
 import re
@@ -63,30 +62,6 @@ class Report(object):
             return flag
         else:
             return False
-
-    def login(self):
-        session = requests.Session()
-        url = "https://passport.ustc.edu.cn/login?service=https://weixine.ustc.edu.cn/2020/caslogin"
-        data=session.get(url)
-        data=data.text
-        data = data.encode('ascii','ignore').decode('utf-8','ignore')
-        soup = BeautifulSoup(data, 'html.parser')
-        CAS_LT = soup.find("input", {"name": "CAS_LT"})['value']
-        data = {
-            'model': 'uplogin.jsp',
-            'service': 'https://weixine.ustc.edu.cn/2020/caslogin',
-            'warn': '',
-            'showCode': '',
-            'username': self.stuid,
-            'password': str(self.password),
-            'button': '',
-            'CAS-LT':CAS_LT,
-            'LT':''
-        }
-        print(data)
-        session.post(url, data=data)
-        print("login...")
-        return session
 
 
 if __name__ == "__main__":
